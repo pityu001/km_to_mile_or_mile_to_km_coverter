@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>km to mile or mile to km converter</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: aliceblue;
+        text-align: center;
+      }
+      input {
+        width: 200px;
+        height: 50px;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        text-align: center;
+        font-style: italic;
+        font-weight: bolder;
+        text-transform: uppercase;
+      }
+      button {
+        width: 200px;
+        height: 50px;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        text-align: center;
+        font-style: italic;
+        font-weight: bolder;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: snow;
+        cursor: pointer;
+        transition: 5s ease-in-out all;
+      }
+      button:hover {
+        opacity: 0.7;
+      }
+      @media screen {
+        h2{
+          font-size: 1.2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="h2">KM To Mile or Mile to KM converter</h2>
+    <input type="text" id="inp" placeholder="write a number..." />
+    <h2 id="res"></h2>
+    <button id="changer">change to miles</button>
+    <button id="convert">Convert</button>
+
+    <script>
+      const h2 = document.getElementById("h2");
+      const inp = document.getElementById("inp");
+      const convert = document.getElementById("convert");
+      const res = document.getElementById("res");
+      const changer = document.getElementById("changer");
+      let tokm = true;
+      let tomile = false;
+
+      function toconvert(x) {
+        return x * 0.621371;
+      }
+
+      function toconvert2(x) {
+        return x * 1.60934;
+      }
+
+      convert.addEventListener("click", () => {
+        let x = inp.value.replace(",", ".");
+        x = Number(x);
+        if (isNaN(x)) {
+          h2.textContent = "the input can only contain numbers";
+          setTimeout(() => {
+            h2.textContent = "KM To Mile or Mile to KM converter";
+          }, 1200);
+
+          const utterance = new SpeechSynthesisUtterance(h2.textContent);
+          utterance.pitch = 1;
+          utterance.rate = 1;
+          utterance.lang = "en-GB";
+          speechSynthesis.speak(utterance);
+        } else if (tokm) {
+          const sum = toconvert(x).toFixed(1);
+          res.textContent = `The sum is: ${sum} miles`;
+
+          const utterance = new SpeechSynthesisUtterance(
+            `The sum is ${sum} miles`
+          );
+          utterance.pitch = 1;
+          utterance.rate = 1;
+          utterance.lang = "en-GB";
+          speechSynthesis.speak(utterance);
+        } else if (tomile) {
+          const sum = toconvert2(x).toFixed(1);
+          res.textContent = `The sum is: ${sum} km`;
+
+          const utterance = new SpeechSynthesisUtterance(
+            `The sum is ${sum} km`
+          );
+          utterance.pitch = 1;
+          utterance.rate = 1;
+          utterance.lang = "en-GB";
+          speechSynthesis.speak(utterance);
+        }
+      });
+
+      changer.addEventListener("click", () => {
+        if (tokm) {
+          tokm = false;
+          tomile = true;
+          changer.textContent = "change to km";
+        } else if (tomile) {
+          tokm = true;
+          tomile = false;
+          changer.textContent = "change to miles";
+        }
+      });
+    </script>
+  </body>
+</html>
